@@ -1,18 +1,11 @@
 package parser;
 
-import java.util.List;
-import java.util.ListIterator;
-import java.lang.reflect.Method;
-
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.tree.*;
-
-
 
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
-		compiler.compile("100+2*34\n");
+		compiler.compile("!p|q->(p->q&r)");
 	}
 	
 	public RuleContext compile(String expr) {
@@ -26,7 +19,7 @@ public class Compiler {
 		//for(int i = 100; i > 0; --i)
 		//	System.out.println(parser.consume());
 
-		ParserRuleContext tree = parser.prog();
+		ParserRuleContext tree = parser.prop();
 		
 		System.out.println(tree.toStringTree(parser));
 		
