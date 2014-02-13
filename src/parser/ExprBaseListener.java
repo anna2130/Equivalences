@@ -17,78 +17,26 @@ public class ExprBaseListener implements ExprListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterNeg(@NotNull ExprParser.NegContext ctx) { }
+	@Override public void enterProg(@NotNull ExprParser.ProgContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitNeg(@NotNull ExprParser.NegContext ctx) { }
+	@Override public void exitProg(@NotNull ExprParser.ProgContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterImpl(@NotNull ExprParser.ImplContext ctx) { }
+	@Override public void enterExpr(@NotNull ExprParser.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitImpl(@NotNull ExprParser.ImplContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterDisj(@NotNull ExprParser.DisjContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitDisj(@NotNull ExprParser.DisjContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterConj(@NotNull ExprParser.ConjContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitConj(@NotNull ExprParser.ConjContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterProp(@NotNull ExprParser.PropContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitProp(@NotNull ExprParser.PropContext ctx) { }
-
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void enterPos(@NotNull ExprParser.PosContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 * <p/>
-	 * The default implementation does nothing.
-	 */
-	@Override public void exitPos(@NotNull ExprParser.PosContext ctx) { }
+	@Override public void exitExpr(@NotNull ExprParser.ExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

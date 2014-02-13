@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.*;
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
-		compiler.compile("!p|q->(p->q&r)");
+		compiler.compile("!p|q->(p->q&r)\n");
 	}
 	
 	public RuleContext compile(String expr) {
@@ -19,7 +19,7 @@ public class Compiler {
 		//for(int i = 100; i > 0; --i)
 		//	System.out.println(parser.consume());
 
-		ParserRuleContext tree = parser.prop();
+		ParserRuleContext tree = parser.prog();
 		
 		System.out.println(tree.toStringTree(parser));
 		

@@ -15,15 +15,14 @@ public class ExprParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, IDENT=7;
+		T__5=1, T__4=2, T__3=3, T__2=4, T__1=5, T__0=6, ATOM=7, NEWLINE=8;
 	public static final String[] tokenNames = {
-		"<INVALID>", "'->'", "'&'", "')'", "'('", "'|'", "'!'", "IDENT"
+		"<INVALID>", "'->'", "'&'", "')'", "'('", "'|'", "'!'", "ATOM", "NEWLINE"
 	};
 	public static final int
-		RULE_prop = 0, RULE_impl = 1, RULE_disj = 2, RULE_conj = 3, RULE_neg = 4, 
-		RULE_pos = 5;
+		RULE_prog = 0, RULE_expr = 1;
 	public static final String[] ruleNames = {
-		"prop", "impl", "disj", "conj", "neg", "pos"
+		"prog", "expr"
 	};
 
 	@Override
@@ -42,31 +41,33 @@ public class ExprParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
-	public static class PropContext extends ParserRuleContext {
-		public ImplContext impl() {
-			return getRuleContext(ImplContext.class,0);
+	public static class ProgContext extends ParserRuleContext {
+		public TerminalNode NEWLINE() { return getToken(ExprParser.NEWLINE, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
 		}
-		public PropContext(ParserRuleContext parent, int invokingState) {
+		public ProgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_prop; }
+		@Override public int getRuleIndex() { return RULE_prog; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterProp(this);
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterProg(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitProp(this);
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitProg(this);
 		}
 	}
 
-	public final PropContext prop() throws RecognitionException {
-		PropContext _localctx = new PropContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_prop);
+	public final ProgContext prog() throws RecognitionException {
+		ProgContext _localctx = new ProgContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_prog);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(12); impl();
+			setState(4); expr(0);
+			setState(5); match(NEWLINE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -80,277 +81,116 @@ public class ExprParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ImplContext extends ParserRuleContext {
-		public DisjContext disj() {
-			return getRuleContext(DisjContext.class,0);
+	public static class ExprContext extends ParserRuleContext {
+		public int _p;
+		public TerminalNode NEWLINE() { return getToken(ExprParser.NEWLINE, 0); }
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
 		}
-		public ImplContext impl(int i) {
-			return getRuleContext(ImplContext.class,i);
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
 		}
-		public List<ImplContext> impl() {
-			return getRuleContexts(ImplContext.class);
-		}
-		public ImplContext(ParserRuleContext parent, int invokingState) {
+		public TerminalNode ATOM() { return getToken(ExprParser.ATOM, 0); }
+		public ExprContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public ExprContext(ParserRuleContext parent, int invokingState, int _p) {
 			super(parent, invokingState);
+			this._p = _p;
 		}
-		@Override public int getRuleIndex() { return RULE_impl; }
+		@Override public int getRuleIndex() { return RULE_expr; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterImpl(this);
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterExpr(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitImpl(this);
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitExpr(this);
 		}
 	}
 
-	public final ImplContext impl() throws RecognitionException {
-		ImplContext _localctx = new ImplContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_impl);
+	public final ExprContext expr(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		ExprContext _localctx = new ExprContext(_ctx, _parentState, _p);
+		ExprContext _prevctx = _localctx;
+		int _startState = 2;
+		enterRecursionRule(_localctx, RULE_expr);
+		int _la;
 		try {
 			int _alt;
-			setState(22);
-			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(14); disj();
-				setState(17); 
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
-				do {
-					switch (_alt) {
-					case 1:
-						{
-						{
-						setState(15); match(1);
-						setState(16); impl();
-						}
-						}
-						break;
-					default:
-						throw new NoViableAltException(this);
-					}
-					setState(19); 
-					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
-				} while ( _alt!=2 && _alt!=-1 );
-				}
-				break;
-
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(21); disj();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class DisjContext extends ParserRuleContext {
-		public DisjContext disj(int i) {
-			return getRuleContext(DisjContext.class,i);
-		}
-		public List<DisjContext> disj() {
-			return getRuleContexts(DisjContext.class);
-		}
-		public ConjContext conj() {
-			return getRuleContext(ConjContext.class,0);
-		}
-		public DisjContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_disj; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterDisj(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitDisj(this);
-		}
-	}
-
-	public final DisjContext disj() throws RecognitionException {
-		DisjContext _localctx = new DisjContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_disj);
-		try {
-			int _alt;
-			setState(32);
-			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(24); conj();
-				setState(27); 
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-				do {
-					switch (_alt) {
-					case 1:
-						{
-						{
-						setState(25); match(5);
-						setState(26); disj();
-						}
-						}
-						break;
-					default:
-						throw new NoViableAltException(this);
-					}
-					setState(29); 
-					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
-				} while ( _alt!=2 && _alt!=-1 );
-				}
-				break;
-
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(31); conj();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class ConjContext extends ParserRuleContext {
-		public ConjContext conj(int i) {
-			return getRuleContext(ConjContext.class,i);
-		}
-		public List<ConjContext> conj() {
-			return getRuleContexts(ConjContext.class);
-		}
-		public NegContext neg() {
-			return getRuleContext(NegContext.class,0);
-		}
-		public ConjContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_conj; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterConj(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitConj(this);
-		}
-	}
-
-	public final ConjContext conj() throws RecognitionException {
-		ConjContext _localctx = new ConjContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_conj);
-		try {
-			int _alt;
-			setState(42);
-			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(34); neg();
-				setState(37); 
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
-				do {
-					switch (_alt) {
-					case 1:
-						{
-						{
-						setState(35); match(2);
-						setState(36); conj();
-						}
-						}
-						break;
-					default:
-						throw new NoViableAltException(this);
-					}
-					setState(39); 
-					_errHandler.sync(this);
-					_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
-				} while ( _alt!=2 && _alt!=-1 );
-				}
-				break;
-
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(41); neg();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class NegContext extends ParserRuleContext {
-		public PosContext pos() {
-			return getRuleContext(PosContext.class,0);
-		}
-		public NegContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_neg; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterNeg(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitNeg(this);
-		}
-	}
-
-	public final NegContext neg() throws RecognitionException {
-		NegContext _localctx = new NegContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_neg);
-		try {
-			setState(47);
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(16);
 			switch (_input.LA(1)) {
 			case 6:
-				enterOuterAlt(_localctx, 1);
 				{
-				setState(44); match(6);
-				setState(45); pos();
+				setState(8); match(6);
+				setState(9); expr(5);
 				}
 				break;
 			case 4:
-			case IDENT:
-				enterOuterAlt(_localctx, 2);
 				{
-				setState(46); pos();
+				setState(10); match(4);
+				setState(11); expr(0);
+				setState(12); match(3);
+				}
+				break;
+			case ATOM:
+				{
+				setState(14); match(ATOM);
+				}
+				break;
+			case NEWLINE:
+				{
+				setState(15); match(NEWLINE);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
+			}
+			_ctx.stop = _input.LT(-1);
+			setState(26);
+			_errHandler.sync(this);
+			_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			while ( _alt!=2 && _alt!=-1 ) {
+				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
+					{
+					setState(24);
+					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
+					case 1:
+						{
+						_localctx = new ExprContext(_parentctx, _parentState, _p);
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(18);
+						if (!(4 >= _localctx._p)) throw new FailedPredicateException(this, "4 >= $_p");
+						setState(19);
+						_la = _input.LA(1);
+						if ( !(_la==2 || _la==5) ) {
+						_errHandler.recoverInline(this);
+						}
+						consume();
+						setState(20); expr(5);
+						}
+						break;
+
+					case 2:
+						{
+						_localctx = new ExprContext(_parentctx, _parentState, _p);
+						pushNewRecursionContext(_localctx, _startState, RULE_expr);
+						setState(21);
+						if (!(3 >= _localctx._p)) throw new FailedPredicateException(this, "3 >= $_p");
+						setState(22); match(1);
+						setState(23); expr(4);
+						}
+						break;
+					}
+					} 
+				}
+				setState(28);
+				_errHandler.sync(this);
+				_alt = getInterpreter().adaptivePredict(_input,2,_ctx);
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -359,82 +199,37 @@ public class ExprParser extends Parser {
 			_errHandler.recover(this, re);
 		}
 		finally {
-			exitRule();
+			unrollRecursionContexts(_parentctx);
 		}
 		return _localctx;
 	}
 
-	public static class PosContext extends ParserRuleContext {
-		public PropContext prop() {
-			return getRuleContext(PropContext.class,0);
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 1: return expr_sempred((ExprContext)_localctx, predIndex);
 		}
-		public TerminalNode IDENT() { return getToken(ExprParser.IDENT, 0); }
-		public PosContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_pos; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterPos(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitPos(this);
-		}
+		return true;
 	}
+	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0: return 4 >= _localctx._p;
 
-	public final PosContext pos() throws RecognitionException {
-		PosContext _localctx = new PosContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_pos);
-		try {
-			setState(54);
-			switch (_input.LA(1)) {
-			case IDENT:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(49); match(IDENT);
-				}
-				break;
-			case 4:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(50); match(4);
-				setState(51); prop();
-				setState(52); match(3);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
+		case 1: return 3 >= _localctx._p;
 		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
+		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\t;\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\3\2\3\2\3\3\3\3\3\3\6\3\24\n\3\r\3"+
-		"\16\3\25\3\3\5\3\31\n\3\3\4\3\4\3\4\6\4\36\n\4\r\4\16\4\37\3\4\5\4#\n"+
-		"\4\3\5\3\5\3\5\6\5(\n\5\r\5\16\5)\3\5\5\5-\n\5\3\6\3\6\3\6\5\6\62\n\6"+
-		"\3\7\3\7\3\7\3\7\3\7\5\79\n\7\3\7\2\b\2\4\6\b\n\f\2\2<\2\16\3\2\2\2\4"+
-		"\30\3\2\2\2\6\"\3\2\2\2\b,\3\2\2\2\n\61\3\2\2\2\f8\3\2\2\2\16\17\5\4\3"+
-		"\2\17\3\3\2\2\2\20\23\5\6\4\2\21\22\7\3\2\2\22\24\5\4\3\2\23\21\3\2\2"+
-		"\2\24\25\3\2\2\2\25\23\3\2\2\2\25\26\3\2\2\2\26\31\3\2\2\2\27\31\5\6\4"+
-		"\2\30\20\3\2\2\2\30\27\3\2\2\2\31\5\3\2\2\2\32\35\5\b\5\2\33\34\7\7\2"+
-		"\2\34\36\5\6\4\2\35\33\3\2\2\2\36\37\3\2\2\2\37\35\3\2\2\2\37 \3\2\2\2"+
-		" #\3\2\2\2!#\5\b\5\2\"\32\3\2\2\2\"!\3\2\2\2#\7\3\2\2\2$\'\5\n\6\2%&\7"+
-		"\4\2\2&(\5\b\5\2\'%\3\2\2\2()\3\2\2\2)\'\3\2\2\2)*\3\2\2\2*-\3\2\2\2+"+
-		"-\5\n\6\2,$\3\2\2\2,+\3\2\2\2-\t\3\2\2\2./\7\b\2\2/\62\5\f\7\2\60\62\5"+
-		"\f\7\2\61.\3\2\2\2\61\60\3\2\2\2\62\13\3\2\2\2\639\7\t\2\2\64\65\7\6\2"+
-		"\2\65\66\5\2\2\2\66\67\7\5\2\2\679\3\2\2\28\63\3\2\2\28\64\3\2\2\29\r"+
-		"\3\2\2\2\n\25\30\37\"),\618";
+		"\3\uacf5\uee8c\u4f5d\u8b0d\u4a45\u78bd\u1b2f\u3378\3\n \4\2\t\2\4\3\t"+
+		"\3\3\2\3\2\3\2\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\23\n\3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\7\3\33\n\3\f\3\16\3\36\13\3\3\3\2\4\2\4\2\3\4\2\4\4\7"+
+		"\7\"\2\6\3\2\2\2\4\22\3\2\2\2\6\7\5\4\3\2\7\b\7\n\2\2\b\3\3\2\2\2\t\n"+
+		"\b\3\1\2\n\13\7\b\2\2\13\23\5\4\3\2\f\r\7\6\2\2\r\16\5\4\3\2\16\17\7\5"+
+		"\2\2\17\23\3\2\2\2\20\23\7\t\2\2\21\23\7\n\2\2\22\t\3\2\2\2\22\f\3\2\2"+
+		"\2\22\20\3\2\2\2\22\21\3\2\2\2\23\34\3\2\2\2\24\25\6\3\2\3\25\26\t\2\2"+
+		"\2\26\33\5\4\3\2\27\30\6\3\3\3\30\31\7\3\2\2\31\33\5\4\3\2\32\24\3\2\2"+
+		"\2\32\27\3\2\2\2\33\36\3\2\2\2\34\32\3\2\2\2\34\35\3\2\2\2\35\5\3\2\2"+
+		"\2\36\34\3\2\2\2\5\22\32\34";
 	public static final ATN _ATN =
 		ATNSimulator.deserialize(_serializedATN.toCharArray());
 	static {
