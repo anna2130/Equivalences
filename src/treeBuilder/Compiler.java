@@ -1,11 +1,17 @@
-package parser;
+package treeBuilder;
 
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
+import parser.ExprLexer;
+import parser.ExprParser;
+import parser.ExprWalker;
 
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
-		compiler.compile("!p|q->(p->q&r)\n");
+		compiler.compile("!p|q->(p->q&r)");
 	}
 	
 	public RuleContext compile(String expr) {
@@ -14,14 +20,16 @@ public class Compiler {
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		ExprParser parser = new ExprParser(tokens);
 		
-		//tokens.fill();
+		FormationTree tree = new FormationTree();
 		
-		//for(int i = 100; i > 0; --i)
-		//	System.out.println(parser.consume());
-
-		ParserRuleContext tree = parser.prog();
+		ParseTree parseTree = parser.prog();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(new ExprWalker(tree), parseTree);
+        
+        tree.toString();
 		
-		System.out.println(tree.toStringTree(parser));
+		//ParserRuleContext t = parser.prog();
+		//System.out.println(t.toStringTree(parser));
 		
 		/*
 		String startRuleName = "prog";

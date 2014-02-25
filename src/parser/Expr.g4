@@ -1,16 +1,13 @@
 grammar Expr;	
 
-prog: expr NEWLINE;
+prog: expr EOF;
 
-expr
-	: '(' expr ')'
-	| '!' expr
-	| expr ('|' | '&') expr
-	| expr '->' expr
-	| ATOM
-	| NEWLINE
+expr: '(' expr ')' 			#EXPR
+	| '!' expr				#NOT
+	| expr BINOP expr		#BINOP_
+	| expr '->' expr		#IMPLIES
+	| ATOM					#ATOM_
 	;
-	
-ATOM: ('a'..'z');
 
-NEWLINE: [\r\n]+;
+BINOP: ('|' | '&');
+ATOM: ('a'..'z');

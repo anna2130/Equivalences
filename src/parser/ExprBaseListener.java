@@ -30,13 +30,65 @@ public class ExprBaseListener implements ExprListener {
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void enterExpr(@NotNull ExprParser.ExprContext ctx) { }
+	@Override public void enterEXPR(@NotNull ExprParser.EXPRContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 * <p/>
 	 * The default implementation does nothing.
 	 */
-	@Override public void exitExpr(@NotNull ExprParser.ExprContext ctx) { }
+	@Override public void exitEXPR(@NotNull ExprParser.EXPRContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterIMPLIES(@NotNull ExprParser.IMPLIESContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitIMPLIES(@NotNull ExprParser.IMPLIESContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterNOT(@NotNull ExprParser.NOTContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitNOT(@NotNull ExprParser.NOTContext ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterBINOP_(@NotNull ExprParser.BINOP_Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitBINOP_(@NotNull ExprParser.BINOP_Context ctx) { }
+
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void enterATOM_(@NotNull ExprParser.ATOM_Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 * <p/>
+	 * The default implementation does nothing.
+	 */
+	@Override public void exitATOM_(@NotNull ExprParser.ATOM_Context ctx) { }
 
 	/**
 	 * {@inheritDoc}
