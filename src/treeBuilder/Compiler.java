@@ -11,10 +11,11 @@ import parser.ExprWalker;
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
-		compiler.compile("!p|q->(p->q&r)");
+//		compiler.compile("!p|q->(p->q&r)");
+		compiler.compile("a&b->!a");
 	}
 	
-	public RuleContext compile(String expr) {
+	public String compile(String expr) {
 		CharStream input = new ANTLRInputStream(expr);
 		ExprLexer lexer = new ExprLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -25,8 +26,9 @@ public class Compiler {
 		ParseTree parseTree = parser.prog();
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(new ExprWalker(tree), parseTree);
-        
-        tree.toString();
+
+		System.out.println("Done");
+        return parseTree.toStringTree(parser);
 		
 		//ParserRuleContext t = parser.prog();
 		//System.out.println(t.toStringTree(parser));
@@ -61,9 +63,6 @@ public class Compiler {
 		{
 			System.err.println("Error: " + e.getMessage());
 		}*/
-		
-		System.out.println("Done");
-		return null;
 	}
 	
 	/*protected void process(Lexer lexer, Class<? extends Parser> parserClass, Parser parser, InputStream is, Reader r) throws IOException, IllegalAccessException, InvocationTargetException, PrintException {

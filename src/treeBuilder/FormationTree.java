@@ -12,35 +12,40 @@ public class FormationTree {
 		this.root = root;
 	}
 	
-	private boolean addRoot(Node n) {
+	public void addNode(Node n) {
 		boolean rootExists = root != null;
-		if (!rootExists) {
-			root = n;
-			rootExists = true;
-		}
 		
-		return rootExists;
+		if (rootExists) {
+			int parentKey = n.getKey() >> 1;
+			Node parent = findNode(parentKey, n.getDepth() - 1);
+			
+			if (parent instanceof UnaryOperator) {
+				((UnaryOperator) parent).setChild(n);
+			} else {
+				if (n.getKey() % 2 == 0)
+					((BinaryOperator) parent).setLeftChild(n);
+				else
+					((BinaryOperator) parent).setRightChild(n);
+			}
+			
+		} else {
+			root = n;
+		}
 	}
 	
-	public boolean addNode(Node n) {
-		boolean result;
-		boolean rootExists = root != null;
+	public Node findNode(int key, int depth) {
+		Node n = root;
 		
-		System.out.println("Adding node... " + rootExists);
-		if (root == null)
-			result = addRoot(n);
-		else {
-			
-			
-			result = false;
+		for (int i = 1; i <= depth; i++) {
+			int k = key >> depth - i;
+			n = n.getChildren()[k];
 		}
-		System.out.println(result);
-		return result;
+		
+		return n;
 	}
 	
 	@Override
 	public String toString() {
-		return root.getValue();
+		return root.toString();
 	}
-	
 }

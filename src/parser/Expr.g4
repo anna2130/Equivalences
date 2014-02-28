@@ -1,6 +1,6 @@
 grammar Expr;	
 
-prog: expr EOF;
+prog: expr;
 
 expr: '(' expr ')' 			#EXPR
 	| '!' expr				#NOT
