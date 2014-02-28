@@ -11,8 +11,7 @@ import parser.ExprWalker;
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
-//		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
-		FormationTree tree = compiler.compile("!p|q->r&q");
+		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
 		System.out.println(tree);
 	}
 	

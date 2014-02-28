@@ -18,7 +18,7 @@ public class FormationTree {
 		if (rootExists) {
 			int parentKey = n.getKey() >> 1;
 			Node parent = findNode(parentKey, n.getDepth() - 1);
-			
+
 			if (parent instanceof UnaryOperator) {
 				((UnaryOperator) parent).setChild(n);
 			} else {
@@ -36,8 +36,8 @@ public class FormationTree {
 	public Node findNode(int key, int depth) {
 		Node n = root;
 		
-		for (int i = 1; i <= depth; i++) {
-			int k = key >> depth - i;
+		for (int i = 0; i < depth; i++) {
+			int k = key >> depth - 1;
 			n = n.getChildren()[k];
 		}
 		
