@@ -2,7 +2,7 @@ package parser;
 
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import parser.ExprParser.ExprContext;
+import parser.ExprParser.ExprContext_;
 
 import java.util.Stack;
 
@@ -23,90 +23,93 @@ public class ExprWalker extends ExprBaseListener {
 		binary = new Stack<Boolean>();
 	}
 	
+	public void remove() {
+		index >>= 1;
+        binary.pop();
+	}
+	
+	public void addBinary() {
+        if (!binary.empty()) {
+        	index <<= 1;
+			if (binary.peek()) {
+				index++;
+			}
+        }
+		binary.push(true);
+	}
+	
+	public void addUnary() {
+		if (!binary.empty()) {
+        	index <<= 1;
+        }
+		binary.push(false);
+	}
+	
     @Override 
     public void enterEXPR(ExprParser.EXPRContext ctx) { 
-    	ExprContext e = ctx.expr();
+    	ExprContext_ e = ctx.expr();
         System.out.println("EXPR -> " + e.getChildCount() + " i: " + index); // needs loop
     }
     
 	@Override public void exitEXPR(ExprParser.EXPRContext ctx) { }
     
     @Override 
-    public void enterIMPLIES(ExprParser.IMPLIESContext ctx) { 
-        java.util.List<ExprContext> e = ctx.expr();
-        System.out.println("IMPLIES -> " + e.get(0).getText() + ", " + e.get(1).getText() + " i: " + Integer.toBinaryString(index));
-        
+    public void enterIMPLIES(ExprParser.IMPLIESContext ctx) {
         tree.addNode(new BinaryOperator(index, binary.size(), "->"));
-		System.out.println(tree.toString());
-        
-        binary.push(true);
-        index <<= 1;
+
+        addBinary();
+		System.out.println("Enter IMPLIES " + "	" + index + "-" + binary.size());
     }
     
 	@Override 
 	public void exitIMPLIES(ExprParser.IMPLIESContext ctx) {
-		System.out.println("Exit implies " + Integer.toBinaryString(index));
-		index = index >> 1;
-		if (binary.pop())
-			index++;
-		System.out.println(index);
+		remove();
+		System.out.println("Exit IMPLIES " + "	" + index + "-" + binary.size());
 	}
     
     @Override 
     public void enterNOT(ExprParser.NOTContext ctx) { 
-    	ExprContext e = ctx.expr();
-        System.out.println("NOT -> " + e.getChild(0).getText() + " i: " + Integer.toBinaryString(index)); 
-        
         tree.addNode(new UnaryOperator(index, binary.size(), "!"));
-		System.out.println(tree.toString());
 
-        binary.push(false);
-        index <<= 1;
+        addUnary();
+		System.out.println("Enter NOT " + "	" + index + "-" + binary.size());
     }
     
 	@Override public void exitNOT(ExprParser.NOTContext ctx) {
-		System.out.println("Exit not " + Integer.toBinaryString(index));
-		if (binary.pop())
-			index++;
-		System.out.println(index);
+		remove();
+		System.out.println("Exit NOT " + "	" + index + "-" + binary.size());
 	}
     
     @Override 
     public void enterBINOP_(ExprParser.BINOP_Context ctx) { 
-        java.util.List<ExprContext> e = ctx.expr();
-        System.out.println("BINOP -> " + e.get(0).getText() + ", " + e.get(1).getText() + " i: " + Integer.toBinaryString(index));
+        java.util.List<ExprContext_> e = ctx.expr();
+        
+        // Works out if | or & -- Probably an easier way of doing this
+        int i = ctx.getText().indexOf(e.get(1).getText()) - 1;
+        String c = ctx.getText().charAt(i) + "";
+        tree.addNode(new BinaryOperator(index, binary.size(), c));
 
-        // TODO: Distinguish between & and |
-        tree.addNode(new BinaryOperator(index, binary.size(), "&"));
-		System.out.println(tree.toString());
-
-        binary.push(true);
-        index <<= 1;
+        addBinary();
+		System.out.println("Enter BINOP " + "	" + index + "-" + binary.size());
     }
     
     @Override 
     public void exitBINOP_(ExprParser.BINOP_Context ctx) {
-    	System.out.println("Exit binop " + Integer.toBinaryString(index));
-		index >>= 1;
-		if (binary.pop())
-			index++;
-		System.out.println(index);
+    	remove();
+		System.out.println("Exit BINOP " + "	" + index + "-" + binary.size());
     }
     
     @Override 
     public void enterATOM_(ExprParser.ATOM_Context ctx) { 
     	TerminalNode e = ctx.ATOM();
-        System.out.println("ATOM -> " + e.getText() + " i: " +  Integer.toBinaryString(index)); 
-
         tree.addNode(new Atom(index, binary.size(), e.getText()));
-		System.out.println(tree.toString());
+
+        addUnary();
+		System.out.println("Enter ATOM = " + ctx.ATOM().getText() + "	" + index + "-" + binary.size());
     }
     
 	@Override public void exitATOM_(ExprParser.ATOM_Context ctx) {
-		System.out.println("Exit atom " + Integer.toBinaryString(index));
-		index = index >> 1;
-		if (binary.peek())
-			index++;
-		System.out.println(index);
+		remove();
+		System.out.println("Exit ATOM = " + ctx.ATOM().getText() + "	" + index + "-" + binary.size());
 	}
 }

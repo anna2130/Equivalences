@@ -8,6 +8,6 @@ public class Atom extends Node {
 
 	@Override
 	public String toString() {
-		return getKey() + ": " + getValue();
+		return getKey() + "-" + getDepth() + ": " + getValue();
 	}
 }

@@ -36,6 +36,8 @@ public class UnaryOperator extends Node {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(getKey());
+		sb.append("-");
+		sb.append(getDepth());
 		sb.append(": ");
 		sb.append(getValue());
 		sb.append(" (");

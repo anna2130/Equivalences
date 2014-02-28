@@ -11,11 +11,12 @@ import parser.ExprWalker;
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
-//		compiler.compile("!p|q->(p->q&r)");
-		compiler.compile("a&b->!a");
+//		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
+		FormationTree tree = compiler.compile("!p|q->r&q");
+		System.out.println(tree);
 	}
 	
-	public String compile(String expr) {
+	public FormationTree compile(String expr) {
 		CharStream input = new ANTLRInputStream(expr);
 		ExprLexer lexer = new ExprLexer(input);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -28,7 +29,7 @@ public class Compiler {
         walker.walk(new ExprWalker(tree), parseTree);
 
 		System.out.println("Done");
-        return parseTree.toStringTree(parser);
+        return tree;
 		
 		//ParserRuleContext t = parser.prog();
 		//System.out.println(t.toStringTree(parser));

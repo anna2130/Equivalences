@@ -42,8 +42,8 @@ public class ExprParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgContext extends ParserRuleContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+		public ExprContext_ expr() {
+			return getRuleContext(ExprContext_.class,0);
 		}
 		public ProgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -79,26 +79,26 @@ public class ExprParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ExprContext extends ParserRuleContext {
+	public static class ExprContext_ extends ParserRuleContext {
 		public int _p;
-		public ExprContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
-		public ExprContext(ParserRuleContext parent, int invokingState, int _p) {
+		public ExprContext_(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public ExprContext_(ParserRuleContext parent, int invokingState, int _p) {
 			super(parent, invokingState);
 			this._p = _p;
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
 	 
-		public ExprContext() { }
-		public void copyFrom(ExprContext ctx) {
+		public ExprContext_() { }
+		public void copyFrom(ExprContext_ ctx) {
 			super.copyFrom(ctx);
 			this._p = ctx._p;
 		}
 	}
-	public static class EXPRContext extends ExprContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+	public static class EXPRContext extends ExprContext_ {
+		public ExprContext_ expr() {
+			return getRuleContext(ExprContext_.class,0);
 		}
-		public EXPRContext(ExprContext ctx) { copyFrom(ctx); }
+		public EXPRContext(ExprContext_ ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterEXPR(this);
@@ -108,14 +108,14 @@ public class ExprParser extends Parser {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitEXPR(this);
 		}
 	}
-	public static class IMPLIESContext extends ExprContext {
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
+	public static class IMPLIESContext extends ExprContext_ {
+		public List<ExprContext_> expr() {
+			return getRuleContexts(ExprContext_.class);
 		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
+		public ExprContext_ expr(int i) {
+			return getRuleContext(ExprContext_.class,i);
 		}
-		public IMPLIESContext(ExprContext ctx) { copyFrom(ctx); }
+		public IMPLIESContext(ExprContext_ ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterIMPLIES(this);
@@ -125,11 +125,11 @@ public class ExprParser extends Parser {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitIMPLIES(this);
 		}
 	}
-	public static class NOTContext extends ExprContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
+	public static class NOTContext extends ExprContext_ {
+		public ExprContext_ expr() {
+			return getRuleContext(ExprContext_.class,0);
 		}
-		public NOTContext(ExprContext ctx) { copyFrom(ctx); }
+		public NOTContext(ExprContext_ ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterNOT(this);
@@ -139,9 +139,9 @@ public class ExprParser extends Parser {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitNOT(this);
 		}
 	}
-	public static class ATOM_Context extends ExprContext {
+	public static class ATOM_Context extends ExprContext_ {
 		public TerminalNode ATOM() { return getToken(ExprParser.ATOM, 0); }
-		public ATOM_Context(ExprContext ctx) { copyFrom(ctx); }
+		public ATOM_Context(ExprContext_ ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterATOM_(this);
@@ -151,15 +151,15 @@ public class ExprParser extends Parser {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitATOM_(this);
 		}
 	}
-	public static class BINOP_Context extends ExprContext {
+	public static class BINOP_Context extends ExprContext_ {
 		public TerminalNode BINOP() { return getToken(ExprParser.BINOP, 0); }
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
+		public List<ExprContext_> expr() {
+			return getRuleContexts(ExprContext_.class);
 		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
+		public ExprContext_ expr(int i) {
+			return getRuleContext(ExprContext_.class,i);
 		}
-		public BINOP_Context(ExprContext ctx) { copyFrom(ctx); }
+		public BINOP_Context(ExprContext_ ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
 			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterBINOP_(this);
@@ -170,11 +170,11 @@ public class ExprParser extends Parser {
 		}
 	}
 
-	public final ExprContext expr(int _p) throws RecognitionException {
+	public final ExprContext_ expr(int _p) throws RecognitionException {
 		ParserRuleContext _parentctx = _ctx;
 		int _parentState = getState();
-		ExprContext _localctx = new ExprContext(_ctx, _parentState, _p);
-		ExprContext _prevctx = _localctx;
+		ExprContext_ _localctx = new ExprContext_(_ctx, _parentState, _p);
+		ExprContext_ _prevctx = _localctx;
 		int _startState = 2;
 		enterRecursionRule(_localctx, RULE_expr);
 		try {
@@ -227,7 +227,7 @@ public class ExprParser extends Parser {
 					switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 					case 1:
 						{
-						_localctx = new BINOP_Context(new ExprContext(_parentctx, _parentState, _p));
+						_localctx = new BINOP_Context(new ExprContext_(_parentctx, _parentState, _p));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(16);
 						if (!(3 >= _localctx._p)) throw new FailedPredicateException(this, "3 >= $_p");
@@ -238,7 +238,7 @@ public class ExprParser extends Parser {
 
 					case 2:
 						{
-						_localctx = new IMPLIESContext(new ExprContext(_parentctx, _parentState, _p));
+						_localctx = new IMPLIESContext(new ExprContext_(_parentctx, _parentState, _p));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(19);
 						if (!(2 >= _localctx._p)) throw new FailedPredicateException(this, "2 >= $_p");
@@ -268,11 +268,11 @@ public class ExprParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 1: return expr_sempred((ExprContext)_localctx, predIndex);
+		case 1: return expr_sempred((ExprContext_)_localctx, predIndex);
 		}
 		return true;
 	}
-	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
+	private boolean expr_sempred(ExprContext_ _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0: return 3 >= _localctx._p;
 
