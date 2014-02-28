@@ -1,4 +1,12 @@
 *.class
+bin/*
+
+# Latex report files
+*.aux
+*.fdb_latexmk
+*.log
+*.synctex.gz
+*.toc
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
