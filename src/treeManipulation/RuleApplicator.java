@@ -4,7 +4,37 @@ import treeBuilder.*;
 
 public class RuleApplicator {
 
-	private void applyAndSimplification(FormationTree tree, Node node, Node child) {		
+	private void relabelTree(FormationTree tree, Node node) {
+		Node[] children = node.getChildren();
+		int key = node.getKey();
+		int depth = node.getDepth();
+
+		if (children.length > 0) {
+			children[0].setKey(key << 1);
+			children[0].setDepth(depth + 1);
+			
+			if (children[0].hasChildren())
+				relabelTree(tree, children[0]);
+		}
+		if (children.length > 1) {
+			children[1].setKey((key << 1) + 1);
+			children[1].setDepth(depth + 1);
+			
+			if (children[1].hasChildren())
+				relabelTree(tree, children[1]);
+		}
+	}
+	
+	public void applyCommutativity(FormationTree tree, int key, int depth) {
+		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+		
+		node.setLeftChild(node.getRightChild());
+		node.setRightChild(node.getLeftChild());
+		
+		relabelTree(tree, node);
+	}
+	
+	private void applyAndSimplification(FormationTree tree, BinaryOperator node, Node child) {		
 		if (node.isRoot())
 			tree.setRoot(child);
 		else {
@@ -25,16 +55,14 @@ public class RuleApplicator {
 	}
 	
 	public void applyLeftAndSimplification(FormationTree tree, int key, int depth) {
-		Node node = tree.findNode(key, depth);
-		assert node instanceof BinaryOperator;
-		Node leftChild = ((BinaryOperator) node).getLeftChild();
+		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+		Node leftChild = node.getLeftChild();
 		applyAndSimplification(tree, node, leftChild);
 	}
 	
 	public void applyRightAndSimplification(FormationTree tree, int key, int depth) {
-		Node node = tree.findNode(key, depth);
-		assert node instanceof BinaryOperator;
-		Node rightChild = ((BinaryOperator) node).getRightChild();
+		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+		Node rightChild = node.getRightChild();
 		applyAndSimplification(tree, node, rightChild);
 	}
 }

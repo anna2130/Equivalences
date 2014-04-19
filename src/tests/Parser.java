@@ -73,26 +73,26 @@ public class Parser {
 		assertEquals("!(a&b): ", tree.toString(), "0-0: ! (0-1: & (0-2: a, 1-2: b))");
 	}
 	
-	// More complex
+	// Complex tests
 	
 	@Test
-	public void testComplex1() {
+	public void testComplexLeft() {
 		FormationTree tree = compiler.compile("(!p|(s&t))&q");
 		assertEquals("(!p|(s&t))&q: ", tree.toString(), "0-0: & (0-1: | (0-2: ! (0-3: p), 1-2: & (2-3: s, 3-3: t)), 1-1: q)");
 	}
 
 	@Test
-	public void testComplex2() {
+	public void testComplexRight() {
 		FormationTree tree = compiler.compile("q&(!p|(s&t))");
 		assertEquals("q&(!p|(s&t)): ", tree.toString(), "0-0: & (0-1: q, 1-1: | (2-2: ! (4-3: p), 3-2: & (6-3: s, 7-3: t)))");
 	}
 
-//	@Test
-//	public void testComplex3() {
-//		FormationTree tree = compiler.compile("!a->b");
-//		assertEquals("!a->b: ", tree.toString(), "0-0: -> (0-1: ! (0-2: a), 1-1: b)");
-//	}
-//	
+	@Test
+	public void testComplexImplies() {
+		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
+		assertEquals("!p|q->(p->q&r): ", tree.toString(), "0-0: -> (0-1: | (0-2: ! (0-3: p), 1-2: q), 1-1: -> (2-2: p, 3-2: & (6-3: q, 7-3: r)))");
+	}
+	
 //	@Test
 //	public void testComplex4() {
 //		FormationTree tree = compiler.compile("!(a&b)");
