@@ -12,6 +12,10 @@ public class FormationTree {
 		this.root = root;
 	}
 	
+	public void setRoot(Node n) {
+		root = n;
+	}
+	
 	public void addNode(Node n) {
 		boolean rootExists = root != null;
 		
@@ -39,21 +43,18 @@ public class FormationTree {
 		
 		for (int i = 0; i < depth; i++) {
 			int k = key >> depth - i - 1;
+		
+			// Remove left most bit from key
+			if (k == 1) {
+				int mask = 1 << i;
+				key = key & mask;
+			}
+			
 			n = n.getChildren()[k];
 		}
 		
 		return n;
 	}
-	
-//	public void replaceNode(Node before, Node after) {
-//		if (after instanceof BinaryOperator) {
-//			BinaryOperator binary = new BinaryOperator(before.getKey(), 
-//					before.getDepth(), after.getValue());
-//			binary.setLeftChild(((BinaryOperator) after).getLeftChild());
-//		} else {
-//			
-//		}
-//	}
 	
 	@Override
 	public String toString() {

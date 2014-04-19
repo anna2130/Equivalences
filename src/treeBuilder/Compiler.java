@@ -15,11 +15,13 @@ public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
 //		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
-		FormationTree tree = compiler.compile("(!p|(s&t))&q");
+//		FormationTree tree = compiler.compile("(!p|(s&t))&q");
+		FormationTree tree = compiler.compile("q&(!p|(s&t))");
+//		FormationTree tree = compiler.compile("q&(!p|s)");
 		System.out.println(tree);
 		
 //		RuleApplicator r = new RuleApplicator();
-//		tree = r.applyLeftSimplification(tree, 0, 0);
+//		r.applyRightAndSimplification(tree, 0, 0);
 //		System.out.println(tree);
 	}
 	

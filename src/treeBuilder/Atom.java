@@ -10,4 +10,5 @@ public class Atom extends Node {
 	public String toString() {
 		return getKey() + "-" + getDepth() + ": " + getValue();
 	}
+
 }
