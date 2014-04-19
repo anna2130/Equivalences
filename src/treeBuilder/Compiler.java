@@ -37,7 +37,6 @@ public class Compiler {
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(new ExprWalker(tree), parseTree);
 
-		System.out.println("Done");
         return tree;
 		
 		//ParserRuleContext t = parser.prog();

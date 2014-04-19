@@ -44,7 +44,7 @@ public class UnaryOperator extends Node {
 		
 		if (child != null)
 			sb.append(child);
-		sb.append(") ");
+		sb.append(")");
 		
 		return sb.toString();
 	}

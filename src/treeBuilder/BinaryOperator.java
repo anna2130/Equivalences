@@ -60,7 +60,7 @@ public class BinaryOperator extends Node {
 			sb.append(", ");
 			sb.append(rightChild);
 		}
-		sb.append(") ");
+		sb.append(")");
 		
 		return sb.toString();
 	}
