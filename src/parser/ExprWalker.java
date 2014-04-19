@@ -15,6 +15,7 @@ public class ExprWalker extends ExprBaseListener {
 	
 	private FormationTree tree;
 	private Stack<Boolean> binary;
+	private Stack<Character> brackets;
 	private int index;
 	private boolean increment;
 	
@@ -22,6 +23,7 @@ public class ExprWalker extends ExprBaseListener {
 		this.tree = tree;
 		index = 0;
 		binary = new Stack<Boolean>();
+		brackets = new Stack<Character>();
 	}
 	
 	public void remove() {
@@ -55,9 +57,13 @@ public class ExprWalker extends ExprBaseListener {
 		return binary.size() - 1;
 	}
 	
-    @Override public void enterEXPR(ExprParser.EXPRContext ctx) { }
+    @Override public void enterEXPR(ExprParser.EXPRContext ctx) {
+    	brackets.push('(');
+    }
     
-	@Override public void exitEXPR(ExprParser.EXPRContext ctx) { }
+	@Override public void exitEXPR(ExprParser.EXPRContext ctx) {
+		brackets.pop();
+	}
     
     @Override 
     public void enterIMPLIES(ExprParser.IMPLIESContext ctx) {
