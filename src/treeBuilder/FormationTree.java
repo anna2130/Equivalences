@@ -58,6 +58,13 @@ public class FormationTree {
 		return n;
 	}
 	
+	public Node findParent(int key, int depth) {
+		int parentKey = key >> 1;
+		int parentDepth = depth--;
+		
+		return findNode(parentKey, parentDepth);
+	}
+	
 	@Override
 	public String toString() {
 		return root.toString();
