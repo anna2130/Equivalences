@@ -14,6 +14,8 @@ public class FormationTree {
 	
 	public void setRoot(Node n) {
 		root = n;
+		root.setKey(0);
+		root.setDepth(0);
 	}
 	
 	public void addNode(Node n) {

@@ -9,32 +9,35 @@ public class RuleApplicator {
 		int key = node.getKey();
 		int depth = node.getDepth();
 
-		if (children.length > 0) {
-			children[0].setKey(key << 1);
-			children[0].setDepth(depth + 1);
-			
-			if (children[0].hasChildren())
-				relabelTree(tree, children[0]);
-		}
-		if (children.length > 1) {
-			children[1].setKey((key << 1) + 1);
-			children[1].setDepth(depth + 1);
-			
-			if (children[1].hasChildren())
-				relabelTree(tree, children[1]);
+		if (children != null) {
+			if (children.length > 0) {
+				children[0].setKey(key << 1);
+				children[0].setDepth(depth + 1);
+				
+				if (children[0].hasChildren())
+					relabelTree(tree, children[0]);
+			}
+			if (children.length > 1) {
+				children[1].setKey((key << 1) + 1);
+				children[1].setDepth(depth + 1);
+				
+				if (children[1].hasChildren())
+					relabelTree(tree, children[1]);
+			}
 		}
 	}
 	
 	public void applyCommutativity(FormationTree tree, int key, int depth) {
 		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
-		
+
+		Node leftChild = node.getLeftChild();
 		node.setLeftChild(node.getRightChild());
-		node.setRightChild(node.getLeftChild());
+		node.setRightChild(leftChild);
 		
 		relabelTree(tree, node);
 	}
 	
-	private void applyAndSimplification(FormationTree tree, BinaryOperator node, Node child) {		
+	private void applyAndSimplification(FormationTree tree, BinaryOperator node, Node child) {
 		if (node.isRoot())
 			tree.setRoot(child);
 		else {
@@ -51,16 +54,16 @@ public class RuleApplicator {
 				((UnaryOperator) parent).setChild(child);				
 		}
 		
-		child.reduceDepth();
+		relabelTree(tree, child);
 	}
 	
-	public void applyLeftAndSimplification(FormationTree tree, int key, int depth) {
+	public void applyAndLeftSimplification(FormationTree tree, int key, int depth) {
 		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
 		Node leftChild = node.getLeftChild();
 		applyAndSimplification(tree, node, leftChild);
 	}
 	
-	public void applyRightAndSimplification(FormationTree tree, int key, int depth) {
+	public void applyAndRightSimplification(FormationTree tree, int key, int depth) {
 		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
 		Node rightChild = node.getRightChild();
 		applyAndSimplification(tree, node, rightChild);
