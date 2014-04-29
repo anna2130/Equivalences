@@ -17,12 +17,13 @@ public class Compiler {
 //		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
 //		FormationTree tree = compiler.compile("(!p|(s&t))&q");
 //		FormationTree tree = compiler.compile("q&(!p|(s&t))");
-		FormationTree tree = compiler.compile("q&p");
+//		FormationTree tree = compiler.compile("((r->s)&(!p&q))|t");
+		FormationTree tree = compiler.compile("q&(!p|(s&t))");
 		System.out.println(tree);
 		
 		RuleApplicator r = new RuleApplicator();
-		r.applyAndLeftSimplification(tree, 0, 0);
-		System.out.println(tree);
+//		r.applyAndLeftAssociativity(tree, 0, 1);
+//		System.out.println(tree);
 	}
 	
 	public FormationTree compile(String expr) {

@@ -61,12 +61,19 @@ public class TreeManipulation {
 		r.applyAndRightSimplification(tree, 0, 0);
 		assertEquals("p&(!q->r): ", tree.toString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
 	}
-
+	
 	@Test
 	public void testAndRightAssociativity() {
 		FormationTree tree = compiler.compile("(p&q)&r");
 		r.applyAndRightAssociativity(tree, 0, 0);
 		assertEquals("(p&q)&r: ", tree.toString(), "0-0: & (0-1: p, 1-1: & (2-2: q, 3-2: r))");
+	}
+
+	@Test
+	public void testAndRightAssociativityComplex() {
+		FormationTree tree = compiler.compile("t|((!p&q)&(r->s))");
+		r.applyAndRightAssociativity(tree, 1, 1);
+		assertEquals("(p&q)&r: ", tree.toString(), "0-0: | (0-1: t, 1-1: & (2-2: ! (4-3: p), 3-2: & (6-3: q, 7-3: -> (14-4: r, 15-4: s))))");
 	}
 	
 	@Test
@@ -75,4 +82,12 @@ public class TreeManipulation {
 		r.applyAndLeftAssociativity(tree, 0, 0);
 		assertEquals("p&(q&r): ", tree.toString(), "0-0: & (0-1: & (0-2: p, 1-2: q), 1-1: r)");
 	}
+
+	@Test
+	public void testAndLeftAssociativityComplex() {
+		FormationTree tree = compiler.compile("((r->s)&(!p&q))|t");
+		r.applyAndLeftAssociativity(tree, 0, 1);
+		assertEquals("p&(q&r): ", tree.toString(), "0-0: | (0-1: & (0-2: & (0-3: ! (0-4: p), 1-3: q), 1-2: -> (2-3: r, 3-3: s)), 1-1: t)");
+	}
+	
 }

@@ -90,6 +90,7 @@ public class RuleApplicator {
 			tree.setRoot(leftChild);
 		else {
 			parent = tree.findParent(key, depth);
+			System.out.println("parent: " + parent);
 			
 			if (parent instanceof UnaryOperator)
 				((UnaryOperator) parent).setChild(leftChild);

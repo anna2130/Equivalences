@@ -44,15 +44,15 @@ public class FormationTree {
 		Node n = root;
 		
 		for (int i = 0; i < depth; i++) {
-			int k = key >> depth - i - 1;
+			int leftMostBit = key >> depth - i - 1;
 		
 			// Remove left most bit from key
-			if (k == 1) {
-				int mask = 1 << i;
-				key = key & mask;
+			if (leftMostBit == 1) {
+				int mask = 1 << depth - i - 1;
+				key = key & ~mask;
 			}
 			
-			n = n.getChildren()[k];
+			n = n.getChildren()[leftMostBit];
 		}
 		
 		return n;
@@ -60,7 +60,7 @@ public class FormationTree {
 	
 	public Node findParent(int key, int depth) {
 		int parentKey = key >> 1;
-		int parentDepth = depth--;
+		int parentDepth = depth - 1;
 		
 		return findNode(parentKey, parentDepth);
 	}
