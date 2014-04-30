@@ -9,13 +9,18 @@ import treeBuilder.Node;
 public class RuleSelector {
 
 	/* The BitSet returns the rules applicable to a node in the order below:
-	 * 1. Commutativity of &
-	 * 2. Idempotence of & (Simplification)
-	 * 3. Left Associativity of &
-	 * 4. Right Associativity of &
+	 * 0. Commutativity of &
+	 * 1. Idempotence of & (Simplification)
+	 * 2. Left Associativity of &
+	 * 3. Right Associativity of &
+	 * 4. Commutativity of |
+	 * 5. Idempotence of |
+	 * 6. Left Associativity of |
+	 * 7. Right Associativity of |
+	 * 
 	 */
 	
-	private int noRules = 4;
+	private int noRules = 8;
 	
 	public BitSet getApplicableRules(FormationTree tree, Node node) {
 		BitSet bs = new BitSet(noRules);
@@ -23,21 +28,37 @@ public class RuleSelector {
 		bs.set(1, isAndOperator(tree, node) && isIdempotent(tree, (BinaryOperator) node));
 		bs.set(2, isAndOperator(tree, node) && isLeftAssociative(tree, (BinaryOperator) node, "&"));
 		bs.set(3, isAndOperator(tree, node) && isRightAssociative(tree, (BinaryOperator) node, "&"));
+		bs.set(4, isOrOperator(tree, node));
+		bs.set(5, isOrOperator(tree, node) && isIdempotent(tree, (BinaryOperator) node));
+		bs.set(6, isOrOperator(tree, node) && isLeftAssociative(tree, (BinaryOperator) node, "|"));
+		bs.set(7, isOrOperator(tree, node) && isRightAssociative(tree, (BinaryOperator) node, "|"));
 		
 		return bs;
 	}
 	
-	public String rulesToString(BitSet bs, Node node) {
+	public String rulesToString(BitSet bs, FormationTree tree, Node node) {
 		StringBuilder sb = new StringBuilder();
+		RuleApplicator ra = new RuleApplicator();
+		
+		String s = node.toString();
+		String nodeBefore = s.substring(1, s.length() - 1);
 		
 		if (bs.get(0))
-			sb.append("Commutativity of ^ \n");
+			sb.append("Commutativity of ^:		" + nodeBefore + " |- " + "\n");
 		if (bs.get(1))
-			sb.append("Idempotence of ^ \n");
+			sb.append("Idempotence of ^:		" + nodeBefore + " |- " + "\n");
 		if (bs.get(2))
-			sb.append("Left Associativity of ^ \n");
+			sb.append("Left Associativity of ^:	" + nodeBefore + " |- " + "\n");
 		if (bs.get(3))
-			sb.append("Right Associativity of ^ \n");
+			sb.append("Right Associativity of ^:	" + nodeBefore + " |- " + "\n");
+		if (bs.get(4))
+			sb.append("Commutativity of v:		" + nodeBefore + " |- " + "\n");
+		if (bs.get(5))
+			sb.append("Idempotence of v:		" + nodeBefore + " |- " + "\n");
+		if (bs.get(6))
+			sb.append("Left Associativity of v:	" + nodeBefore + " |- " + "\n");
+		if (bs.get(7))
+			sb.append("Right Associativity of v:	" + nodeBefore + " |- " + "\n");
 		
 		return sb.toString();
 	}

@@ -17,18 +17,21 @@ import treeManipulation.RuleSelector;
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
+		String s = "(r|q)|(r|q)";
 //		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
 //		FormationTree tree = compiler.compile("(!p|(s&t))&q");
 //		FormationTree tree = compiler.compile("q&(!p|(s&t))");
 //		FormationTree tree = compiler.compile("((r->s)&(!p&q))|t");
-		FormationTree tree = compiler.compile("(r&q)&(r&q)");
+		FormationTree tree = compiler.compile(s);
 		System.out.println(tree);
 		
 		Node node = tree.findNode(0, 0);
 		
 		RuleSelector rs = new RuleSelector();
 		BitSet bs = rs.getApplicableRules(tree, node);
-		System.out.println(rs.rulesToString(bs, node));
+		System.out.println(rs.rulesToString(bs, tree, node));
+		
+		System.out.println(tree);
 		
 //		RuleApplicator ra = new RuleApplicator();
 //		ra.applyAndSimplification(tree, 0, 1);

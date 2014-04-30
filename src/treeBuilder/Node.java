@@ -61,5 +61,7 @@ public abstract class Node {
 	
 	@Override
 	public abstract String toString();
+	
+	public abstract String toTreeString();
 
 }

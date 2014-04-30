@@ -83,6 +83,11 @@ public class FormationTree {
 	
 	@Override
 	public String toString() {
-		return root.toString();
+		String s = root.toString();
+		return s.substring(1, s.length()-1);
+	}
+	
+	public String toTreeString() {
+		return root.toTreeString();
 	}
 }

@@ -27,18 +27,16 @@ public class RuleApplicator {
 		}
 	}
 	
-	public void applyCommutativity(FormationTree tree, int key, int depth) {
-		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
-
+	public Node applyCommutativity(FormationTree tree, BinaryOperator node) {
 		Node leftChild = node.getLeftChild();
 		node.setLeftChild(node.getRightChild());
 		node.setRightChild(leftChild);
 		
 		relabelTree(tree, node);
+		return node;
 	}
 	
-	public void applyAndSimplification(FormationTree tree, int key, int depth) {
-		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+	public Node applyAndSimplification(FormationTree tree, BinaryOperator node) {
 		Node child = node.getLeftChild();
 		
 		Node parent = child;
@@ -59,6 +57,7 @@ public class RuleApplicator {
 		}
 		
 		relabelTree(tree, parent);
+		return child;
 	}
 	
 //	public void applyAndLeftSimplification(FormationTree tree, int key, int depth) {
@@ -73,16 +72,15 @@ public class RuleApplicator {
 //		applyAndSimplification(tree, node, rightChild);
 //	}
 
-	public void applyAndRightAssociativity(FormationTree tree, int key, int depth) {
-		applyRightRotation(tree, key, depth);
+	public Node applyAndRightAssociativity(FormationTree tree, BinaryOperator node) {
+		return applyRightRotation(tree, node);
 	}
 
-	public void applyAndLeftAssociativity(FormationTree tree, int key, int depth) {
-		applyLeftRotation(tree, key, depth);
+	public Node applyAndLeftAssociativity(FormationTree tree, BinaryOperator node) {
+		return applyLeftRotation(tree, node);
 	}
 	
-	public void applyRightRotation(FormationTree tree, int key, int depth) {
-		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+	public Node applyRightRotation(FormationTree tree, BinaryOperator node) {
 		BinaryOperator leftChild = (BinaryOperator) node.getLeftChild();
 
 		Node parent = leftChild;
@@ -93,14 +91,14 @@ public class RuleApplicator {
 		if (node.isRoot())
 			tree.setRoot(leftChild);
 		else {
-			parent = tree.findParent(key, depth);
+			parent = tree.findParent(node.getKey(), node.getDepth());
 			System.out.println("parent: " + parent);
 			
 			if (parent instanceof UnaryOperator)
 				((UnaryOperator) parent).setChild(leftChild);
 			else {
 				// Check if left or right child
-				if (key >> (depth - 1) == 0) 
+				if (node.getKey() >> (node.getDepth() - 1) == 0) 
 					((BinaryOperator) parent).setLeftChild(leftChild);
 				else 
 					((BinaryOperator) parent).setRightChild(leftChild);
@@ -108,10 +106,10 @@ public class RuleApplicator {
 		}
 		leftChild.setRightChild(node);
 		relabelTree(tree, parent);
+		return leftChild;
 	}
 	
-	public void applyLeftRotation(FormationTree tree, int key, int depth) {
-		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+	public Node applyLeftRotation(FormationTree tree, BinaryOperator node) {
 		BinaryOperator rightChild = (BinaryOperator) node.getRightChild();
 
 		Node parent = rightChild;
@@ -122,13 +120,13 @@ public class RuleApplicator {
 		if (node.isRoot())
 			tree.setRoot(rightChild);
 		else {
-			parent = tree.findParent(key, depth);
+			parent = tree.findParent(node.getKey(), node.getDepth());
 			
 			if (parent instanceof UnaryOperator)
 				((UnaryOperator) parent).setChild(rightChild);
 			else {
 				// Check if left or right child
-				if (key >> (depth - 1) == 0) 
+				if (node.getKey() >> (node.getDepth() - 1) == 0) 
 					((BinaryOperator) parent).setLeftChild(rightChild);
 				else 
 					((BinaryOperator) parent).setRightChild(rightChild);
@@ -136,6 +134,7 @@ public class RuleApplicator {
 		}
 		rightChild.setLeftChild(node);
 		relabelTree(tree, parent);
+		return rightChild;
 	}
 }
 

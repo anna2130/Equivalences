@@ -42,9 +42,21 @@ public class BinaryOperator extends Node {
 				
 		return children;
 	}
-
+	
 	@Override
 	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("(");
+		sb.append(leftChild);
+		sb.append(super.getValue());
+		sb.append(rightChild);
+		sb.append(")");
+		
+		return sb.toString();
+	}
+	
+	public String toTreeString() {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append(getKey());
@@ -55,10 +67,10 @@ public class BinaryOperator extends Node {
 		sb.append(" (");
 		
 		if (leftChild != null)
-			sb.append(leftChild);
+			sb.append(leftChild.toTreeString());
 		if (rightChild != null) {
 			sb.append(", ");
-			sb.append(rightChild);
+			sb.append(rightChild.toTreeString());
 		}
 		sb.append(")");
 		

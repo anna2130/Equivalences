@@ -35,6 +35,15 @@ public class UnaryOperator extends Node {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
+		sb.append(super.getValue());
+		sb.append(child);
+		
+		return sb.toString();
+	}
+	
+	public String toTreeString() {
+		StringBuilder sb = new StringBuilder();
+		
 		sb.append(getKey());
 		sb.append("-");
 		sb.append(getDepth());
@@ -43,7 +52,7 @@ public class UnaryOperator extends Node {
 		sb.append(" (");
 		
 		if (child != null)
-			sb.append(child);
+			sb.append(child.toTreeString());
 		sb.append(")");
 		
 		return sb.toString();
