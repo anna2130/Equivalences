@@ -18,7 +18,7 @@ public class Compiler {
 //		FormationTree tree = compiler.compile("(!p|(s&t))&q");
 //		FormationTree tree = compiler.compile("q&(!p|(s&t))");
 //		FormationTree tree = compiler.compile("((r->s)&(!p&q))|t");
-		FormationTree tree = compiler.compile("p&(r&q)");
+		FormationTree tree = compiler.compile("r&r&r");
 		System.out.println(tree);
 		
 //		RuleApplicator r = new RuleApplicator();

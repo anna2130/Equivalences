@@ -9,5 +9,5 @@ expr: '(' expr ')' 			#EXPR
 	| ATOM					#ATOM_
 	;
 
-BINOP: ('|' | '&');
-ATOM: ('a'..'z');
+BINOP: ('&' | '|');
+ATOM:  ('a'..'z');
