@@ -24,35 +24,35 @@ public class TreeManipulation {
 	@Test
 	public void testAndCommutativity() {
 		FormationTree tree = compiler.compile("q&p");
-		r.applyCommutativity(tree, (BinaryOperator) tree.findNode(0, 0));
+		r.applyCommutativity((BinaryOperator) tree.findNode(0, 0));
 		assertEquals("q&p: ", tree.toTreeString(), "0-0: & (0-1: p, 1-1: q)");
 	}
 
 	@Test
 	public void testAndCommutativityComplex() {
 		FormationTree tree = compiler.compile("(!q->r)&(p|s)");
-		r.applyCommutativity(tree, (BinaryOperator) tree.findNode(0, 0));
+		r.applyCommutativity((BinaryOperator) tree.findNode(0, 0));
 		assertEquals("(!q->r)&(p|s): ", tree.toTreeString(), "0-0: & (0-1: | (0-2: p, 1-2: s), 1-1: -> (2-2: ! (4-3: q), 3-2: r))");
 	}
 	
 	@Test
 	public void testAndSimplification() {
 		FormationTree tree = compiler.compile("p&p");
-		r.applyAndSimplification(tree, (BinaryOperator) tree.findNode(0, 0));
+		r.applyAndIdempotence(tree, (BinaryOperator) tree.findNode(0, 0));
 		assertEquals("p&p: ", tree.toTreeString(), "0-0: p");
 	}
 	
 	@Test
 	public void testAndSimplificationComplex() {
 		FormationTree tree = compiler.compile("(!q->r)&(!q->r)");
-		r.applyAndSimplification(tree, (BinaryOperator) tree.findNode(0, 0));
+		r.applyAndIdempotence(tree, (BinaryOperator) tree.findNode(0, 0));
 		assertEquals("(!q->r)&(!q->r): ", tree.toTreeString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
 	}
 	
 	@Test
 	public void testAndSimplificationComplex2() {
 		FormationTree tree = compiler.compile("((p->q)&(p->q))&q");
-		r.applyAndSimplification(tree, (BinaryOperator) tree.findNode(0, 1));
+		r.applyAndIdempotence(tree, (BinaryOperator) tree.findNode(0, 1));
 		assertEquals("(!q->r)&(!q->r): ", tree.toTreeString(), "0-0: & (0-1: -> (0-2: p, 1-2: q), 1-1: q)");
 	}
 

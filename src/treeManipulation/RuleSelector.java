@@ -10,7 +10,7 @@ public class RuleSelector {
 
 	/* The BitSet returns the rules applicable to a node in the order below:
 	 * 0. Commutativity of &
-	 * 1. Idempotence of & (Simplification)
+	 * 1. Idempotence of & 
 	 * 2. Left Associativity of &
 	 * 3. Right Associativity of &
 	 * 4. Commutativity of |
@@ -44,21 +44,29 @@ public class RuleSelector {
 		String nodeBefore = s.substring(1, s.length() - 1);
 		
 		if (bs.get(0))
-			sb.append("Commutativity of ^:		" + nodeBefore + " |- " + "\n");
+			sb.append("Commutativity of ^ :		" + nodeBefore + " |- " + 
+					ra.viewCommutativity((BinaryOperator) node) + "\n");
 		if (bs.get(1))
-			sb.append("Idempotence of ^:		" + nodeBefore + " |- " + "\n");
+			sb.append("Idempotence of ^ :		" + nodeBefore + " |- " + 
+					ra.viewIdempotence((BinaryOperator) node) + "\n");
 		if (bs.get(2))
-			sb.append("Left Associativity of ^:	" + nodeBefore + " |- " + "\n");
+			sb.append("Left Associativity of ^ :	" + nodeBefore + " |- " + 
+					ra.viewLeftAssociativity((BinaryOperator) node) + "\n");
 		if (bs.get(3))
-			sb.append("Right Associativity of ^:	" + nodeBefore + " |- " + "\n");
+			sb.append("Right Associativity of ^ :	" + nodeBefore + " |- " + 
+					ra.viewRightAssociativity((BinaryOperator) node) + "\n");
 		if (bs.get(4))
-			sb.append("Commutativity of v:		" + nodeBefore + " |- " + "\n");
+			sb.append("Commutativity of v:		" + nodeBefore + " |- " + 
+					ra.viewCommutativity((BinaryOperator) node) + "\n");
 		if (bs.get(5))
-			sb.append("Idempotence of v:		" + nodeBefore + " |- " + "\n");
+			sb.append("Idempotence of v:		" + nodeBefore + " |- " + 
+					ra.viewIdempotence((BinaryOperator) node) + "\n");
 		if (bs.get(6))
-			sb.append("Left Associativity of v:	" + nodeBefore + " |- " + "\n");
+			sb.append("Left Associativity of v:	" + nodeBefore + " |- " + 
+					ra.viewLeftAssociativity((BinaryOperator) node) + "\n");
 		if (bs.get(7))
-			sb.append("Right Associativity of v:	" + nodeBefore + " |- " + "\n");
+			sb.append("Right Associativity of v:	" + nodeBefore + " |- " + 
+					ra.viewRightAssociativity((BinaryOperator) node) + "\n");
 		
 		return sb.toString();
 	}

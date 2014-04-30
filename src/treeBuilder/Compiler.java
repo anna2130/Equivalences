@@ -17,7 +17,7 @@ import treeManipulation.RuleSelector;
 public class Compiler {
 	public static void main(String args[]) {
 		Compiler compiler = new Compiler();
-		String s = "(r|q)|(r|q)";
+		String s = "(r&q)&(p&s)";
 //		FormationTree tree = compiler.compile("!p|q->(p->q&r)");
 //		FormationTree tree = compiler.compile("(!p|(s&t))&q");
 //		FormationTree tree = compiler.compile("q&(!p|(s&t))");

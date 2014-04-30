@@ -4,39 +4,36 @@ import treeBuilder.*;
 
 public class RuleApplicator {
 	
-	private void relabelTree(FormationTree tree, Node node) {
-		Node[] children = node.getChildren();
-		int key = node.getKey();
-		int depth = node.getDepth();
-
-		if (children != null) {
+	private void relabelNode(Node node) {
+		if (node.hasChildren()) {
+			Node[] children = node.getChildren();
+			int key = node.getKey();
+			int depth = node.getDepth();
+			
 			if (children.length > 0) {
 				children[0].setKey(key << 1);
 				children[0].setDepth(depth + 1);
 				
-				if (children[0].hasChildren())
-					relabelTree(tree, children[0]);
+				relabelNode(children[0]);
 			}
 			if (children.length > 1) {
 				children[1].setKey((key << 1) + 1);
 				children[1].setDepth(depth + 1);
 				
-				if (children[1].hasChildren())
-					relabelTree(tree, children[1]);
+				relabelNode(children[1]);
 			}
 		}
 	}
 	
-	public Node applyCommutativity(FormationTree tree, BinaryOperator node) {
+	public void applyCommutativity(BinaryOperator node) {
 		Node leftChild = node.getLeftChild();
 		node.setLeftChild(node.getRightChild());
 		node.setRightChild(leftChild);
 		
-		relabelTree(tree, node);
-		return node;
+		relabelNode(node);
 	}
 	
-	public Node applyAndSimplification(FormationTree tree, BinaryOperator node) {
+	public void applyAndIdempotence(FormationTree tree, BinaryOperator node) {
 		Node child = node.getLeftChild();
 		
 		Node parent = child;
@@ -56,36 +53,23 @@ public class RuleApplicator {
 				((UnaryOperator) parent).setChild(child);				
 		}
 		
-		relabelTree(tree, parent);
-		return child;
-	}
-	
-//	public void applyAndLeftSimplification(FormationTree tree, int key, int depth) {
-//		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
-//		Node leftChild = node.getLeftChild();
-//		applyAndSimplification(tree, node, leftChild);
-//	}
-//	
-//	public void applyAndRightSimplification(FormationTree tree, int key, int depth) {
-//		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
-//		Node rightChild = node.getRightChild();
-//		applyAndSimplification(tree, node, rightChild);
-//	}
-
-	public Node applyAndRightAssociativity(FormationTree tree, BinaryOperator node) {
-		return applyRightRotation(tree, node);
+		relabelNode(parent);
 	}
 
-	public Node applyAndLeftAssociativity(FormationTree tree, BinaryOperator node) {
-		return applyLeftRotation(tree, node);
+	public void applyAndRightAssociativity(FormationTree tree, BinaryOperator node) {
+		applyRightRotation(tree, node);
+	}
+
+	public void applyAndLeftAssociativity(FormationTree tree, BinaryOperator node) {
+		applyLeftRotation(tree, node);
 	}
 	
-	public Node applyRightRotation(FormationTree tree, BinaryOperator node) {
+	public void applyRightRotation(FormationTree tree, BinaryOperator node) {
 		BinaryOperator leftChild = (BinaryOperator) node.getLeftChild();
 
 		Node parent = leftChild;
 		Node[] grandChildren = leftChild.getChildren();
-		if (grandChildren != null && grandChildren.length == 2)
+		if (leftChild.hasChildren() && grandChildren.length == 2)
 			node.setLeftChild(grandChildren[1]);
 		
 		if (node.isRoot())
@@ -105,16 +89,15 @@ public class RuleApplicator {
 			}
 		}
 		leftChild.setRightChild(node);
-		relabelTree(tree, parent);
-		return leftChild;
+		relabelNode(parent);
 	}
 	
-	public Node applyLeftRotation(FormationTree tree, BinaryOperator node) {
+	public void applyLeftRotation(FormationTree tree, BinaryOperator node) {
 		BinaryOperator rightChild = (BinaryOperator) node.getRightChild();
 
 		Node parent = rightChild;
 		Node[] grandChildren = rightChild.getChildren();
-		if (grandChildren != null && grandChildren.length == 2)
+		if (rightChild.hasChildren() && grandChildren.length == 2)
 			node.setRightChild(grandChildren[0]);
 		
 		if (node.isRoot())
@@ -133,8 +116,51 @@ public class RuleApplicator {
 			}
 		}
 		rightChild.setLeftChild(node);
-		relabelTree(tree, parent);
-		return rightChild;
+		relabelNode(parent);
+	}
+	
+	public String viewCommutativity(BinaryOperator node) {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(node.getRightChild());
+		sb.append(node.getValue());
+		sb.append(node.getLeftChild());
+		
+		return sb.toString();
+	}
+	
+	public String viewIdempotence(BinaryOperator node) {
+		return node.getLeftChild().toString();
+	}
+	
+	public String viewLeftAssociativity(BinaryOperator node) {
+		StringBuilder sb = new StringBuilder();
+		BinaryOperator rightChild = (BinaryOperator) node.getRightChild();
+		
+		sb.append('(');
+		sb.append(node.getLeftChild());
+		sb.append(node.getValue());
+		sb.append(rightChild.getLeftChild());
+		sb.append(')');
+		sb.append(rightChild.getValue());
+		sb.append(rightChild.getRightChild());
+		
+		return sb.toString();
+	}
+	
+	public String viewRightAssociativity(BinaryOperator node) {
+		StringBuilder sb = new StringBuilder();
+		BinaryOperator leftChild = (BinaryOperator) node.getLeftChild();
+		
+		sb.append(leftChild.getLeftChild());
+		sb.append(node.getValue());
+		sb.append('(');
+		sb.append(leftChild.getRightChild());
+		sb.append(node.getValue());
+		sb.append(node.getRightChild());
+		sb.append(')');
+		
+		return sb.toString();
 	}
 }
 
