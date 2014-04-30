@@ -18,11 +18,11 @@ public class Compiler {
 //		FormationTree tree = compiler.compile("(!p|(s&t))&q");
 //		FormationTree tree = compiler.compile("q&(!p|(s&t))");
 //		FormationTree tree = compiler.compile("((r->s)&(!p&q))|t");
-		FormationTree tree = compiler.compile("q&(!p|(s&t))");
+		FormationTree tree = compiler.compile("p&(r&q)");
 		System.out.println(tree);
 		
-		RuleApplicator r = new RuleApplicator();
-//		r.applyAndLeftAssociativity(tree, 0, 1);
+//		RuleApplicator r = new RuleApplicator();
+//		r.applyAndSimplification(tree, 0, 0);
 //		System.out.println(tree);
 	}
 	

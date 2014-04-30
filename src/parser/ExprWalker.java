@@ -87,6 +87,7 @@ public class ExprWalker extends ExprBaseListener {
         java.util.List<ExprContext_> e = ctx.expr();
         // Works out if | or & -- Probably an easier way of doing this
         int i = ctx.getText().indexOf(e.get(1).getText()) - 1;
+        System.out.println(e.get(1).getText());
         String c = ctx.getText().charAt(i) + "";
         
         tree.addNode(new BinaryOperator(index, depth(), c));

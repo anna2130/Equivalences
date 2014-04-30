@@ -3,7 +3,7 @@ package treeManipulation;
 import treeBuilder.*;
 
 public class RuleApplicator {
-
+	
 	private void relabelTree(FormationTree tree, Node node) {
 		Node[] children = node.getChildren();
 		int key = node.getKey();
@@ -37,7 +37,10 @@ public class RuleApplicator {
 		relabelTree(tree, node);
 	}
 	
-	private void applyAndSimplification(FormationTree tree, BinaryOperator node, Node child) {
+	public void applyAndSimplification(FormationTree tree, int key, int depth) {
+		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+		Node child = node.getLeftChild();
+		
 		if (node.isRoot())
 			tree.setRoot(child);
 		else {
@@ -57,17 +60,17 @@ public class RuleApplicator {
 		relabelTree(tree, child);
 	}
 	
-	public void applyAndLeftSimplification(FormationTree tree, int key, int depth) {
-		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
-		Node leftChild = node.getLeftChild();
-		applyAndSimplification(tree, node, leftChild);
-	}
-	
-	public void applyAndRightSimplification(FormationTree tree, int key, int depth) {
-		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
-		Node rightChild = node.getRightChild();
-		applyAndSimplification(tree, node, rightChild);
-	}
+//	public void applyAndLeftSimplification(FormationTree tree, int key, int depth) {
+//		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+//		Node leftChild = node.getLeftChild();
+//		applyAndSimplification(tree, node, leftChild);
+//	}
+//	
+//	public void applyAndRightSimplification(FormationTree tree, int key, int depth) {
+//		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
+//		Node rightChild = node.getRightChild();
+//		applyAndSimplification(tree, node, rightChild);
+//	}
 
 	public void applyAndRightAssociativity(FormationTree tree, int key, int depth) {
 		applyRightRotation(tree, key, depth);

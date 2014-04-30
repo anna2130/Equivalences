@@ -33,34 +33,48 @@ public class TreeManipulation {
 		r.applyCommutativity(tree, 0, 0);
 		assertEquals("(!q->r)&(p|s): ", tree.toString(), "0-0: & (0-1: | (0-2: p, 1-2: s), 1-1: -> (2-2: ! (4-3: q), 3-2: r))");
 	}
+	
+	@Test
+	public void testAndSimplification() {
+		FormationTree tree = compiler.compile("p&p");
+		r.applyAndSimplification(tree, 0, 0);
+		assertEquals("p&p: ", tree.toString(), "0-0: p");
+	}
+	
+	@Test
+	public void testAndSimplificationComplex() {
+		FormationTree tree = compiler.compile("(!q->r)&(!q->r)");
+		r.applyAndSimplification(tree, 0, 0);
+		assertEquals("(!q->r)&(!q->r): ", tree.toString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
+	}
 
-	@Test
-	public void testAndLeftSimplification() {
-		FormationTree tree = compiler.compile("q&p");
-		r.applyAndLeftSimplification(tree, 0, 0);
-		assertEquals("q&p: ", tree.toString(), "0-0: q");
-	}
-	
-	@Test
-	public void testAndLeftSimplificationComplex() {
-		FormationTree tree = compiler.compile("(!q->r)&p");
-		r.applyAndLeftSimplification(tree, 0, 0);
-		assertEquals("(!q->r)&p: ", tree.toString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
-	}
-	
-	@Test
-	public void testAndRightSimplification() {
-		FormationTree tree = compiler.compile("q&p");
-		r.applyAndRightSimplification(tree, 0, 0);
-		assertEquals("q&p: ", tree.toString(), "0-0: p");
-	}
-	
-	@Test
-	public void testAndRightSimplificationComplex() {
-		FormationTree tree = compiler.compile("p&(!q->r)");
-		r.applyAndRightSimplification(tree, 0, 0);
-		assertEquals("p&(!q->r): ", tree.toString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
-	}
+//	@Test
+//	public void testAndLeftSimplification() {
+//		FormationTree tree = compiler.compile("q&p");
+//		r.applyAndLeftSimplification(tree, 0, 0);
+//		assertEquals("q&p: ", tree.toString(), "0-0: q");
+//	}
+//	
+//	@Test
+//	public void testAndLeftSimplificationComplex() {
+//		FormationTree tree = compiler.compile("(!q->r)&p");
+//		r.applyAndLeftSimplification(tree, 0, 0);
+//		assertEquals("(!q->r)&p: ", tree.toString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
+//	}
+//	
+//	@Test
+//	public void testAndRightSimplification() {
+//		FormationTree tree = compiler.compile("q&p");
+//		r.applyAndRightSimplification(tree, 0, 0);
+//		assertEquals("q&p: ", tree.toString(), "0-0: p");
+//	}
+//	
+//	@Test
+//	public void testAndRightSimplificationComplex() {
+//		FormationTree tree = compiler.compile("p&(!q->r)");
+//		r.applyAndRightSimplification(tree, 0, 0);
+//		assertEquals("p&(!q->r): ", tree.toString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
+//	}
 	
 	@Test
 	public void testAndRightAssociativity() {
