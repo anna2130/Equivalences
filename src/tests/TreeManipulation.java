@@ -47,6 +47,13 @@ public class TreeManipulation {
 		r.applyAndSimplification(tree, 0, 0);
 		assertEquals("(!q->r)&(!q->r): ", tree.toString(), "0-0: -> (0-1: ! (0-2: q), 1-1: r)");
 	}
+	
+	@Test
+	public void testAndSimplificationComplex2() {
+		FormationTree tree = compiler.compile("((p->q)&(p->q))&q");
+		r.applyAndSimplification(tree, 0, 1);
+		assertEquals("(!q->r)&(!q->r): ", tree.toString(), "0-0: & (0-1: -> (0-2: p, 1-2: q), 1-1: q)");
+	}
 
 //	@Test
 //	public void testAndLeftSimplification() {

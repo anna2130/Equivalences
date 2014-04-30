@@ -41,12 +41,13 @@ public class RuleApplicator {
 		BinaryOperator node = (BinaryOperator) tree.findNode(key, depth);
 		Node child = node.getLeftChild();
 		
+		Node parent = child;
 		if (node.isRoot())
 			tree.setRoot(child);
 		else {
 			int parentKey = node.getKey() >> 1;
 			int parentDepth = node.getDepth() - 1;
-			Node parent = tree.findNode(parentKey, parentDepth);
+			parent = tree.findNode(parentKey, parentDepth);
 			
 			if (parent instanceof BinaryOperator) {
 				if (node.getKey() % 2 == 0)
@@ -57,7 +58,7 @@ public class RuleApplicator {
 				((UnaryOperator) parent).setChild(child);				
 		}
 		
-		relabelTree(tree, child);
+		relabelTree(tree, parent);
 	}
 	
 //	public void applyAndLeftSimplification(FormationTree tree, int key, int depth) {

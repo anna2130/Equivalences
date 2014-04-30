@@ -65,6 +65,22 @@ public class FormationTree {
 		return findNode(parentKey, parentDepth);
 	}
 	
+	public boolean equalSubTrees(Node n1, Node n2) {		
+		if (n1.getValue().equals(n2.getValue())) {
+			if (n1 instanceof Atom)
+				return true;
+			
+			Node[] children1 = n1.getChildren();
+			Node[] children2 = n2.getChildren();
+			if (n1 instanceof UnaryOperator)
+				return equalSubTrees(children1[0], children2[0]);
+			else
+				return equalSubTrees(children1[0], children2[0]) 
+						&& equalSubTrees(children1[1], children2[1]);
+		}
+		return false;
+	}
+	
 	@Override
 	public String toString() {
 		return root.toString();
